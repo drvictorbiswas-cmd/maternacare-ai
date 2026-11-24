@@ -1,18 +1,26 @@
 /* Maternacare AI PWA — browser controller. All data in localStorage. */
+// Data is namespaced by identity (signed-in user id or device id) so each person sees only their own.
+const NS = () => '_' + Payments.identityId();
+const key = base => base + NS();
 let LANG = localStorage.getItem('mc_lang') || 'en';
-let P = JSON.parse(localStorage.getItem('mc_profile') || 'null');
-let TASKS = JSON.parse(localStorage.getItem('mc_tasks') || '[]');
-let CHAT = JSON.parse(localStorage.getItem('mc_chat') || '[]');
+let P = JSON.parse(localStorage.getItem(key('mc_profile')) || 'null');
+let TASKS = JSON.parse(localStorage.getItem(key('mc_tasks')) || '[]');
+let CHAT = JSON.parse(localStorage.getItem(key('mc_chat')) || '[]');
 let deferredPrompt = null;
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const tr = k => Engine.t(LANG, k);
 const save = () => {
-  localStorage.setItem('mc_profile', JSON.stringify(P));
-  localStorage.setItem('mc_tasks', JSON.stringify(TASKS));
-  localStorage.setItem('mc_chat', JSON.stringify(CHAT));
+  localStorage.setItem(key('mc_profile'), JSON.stringify(P));
+  localStorage.setItem(key('mc_tasks'), JSON.stringify(TASKS));
+  localStorage.setItem(key('mc_chat'), JSON.stringify(CHAT));
 };
+function loadUserData(){
+  P = JSON.parse(localStorage.getItem(key('mc_profile')) || 'null');
+  TASKS = JSON.parse(localStorage.getItem(key('mc_tasks')) || '[]');
+  CHAT = JSON.parse(localStorage.getItem(key('mc_chat')) || '[]');
+}
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 function applyLang() {
@@ -70,6 +78,53 @@ function renderSubPage(){
 }
 $('#gateClose').addEventListener('click', ()=>$('#gate').style.display='none');
 $('#resetSub').addEventListener('click', ()=>{ if(confirm(tr('clear')+'?')){ Payments.clearSubscription(); renderSubPage(); } });
+
+/* ---- Auth UI ---- */
+let authMode='signin', authTab='email', otpConfirm=null;
+function showAuth(){ $('#authModal').style.display='flex'; updateAuthUI(); }
+function updateAuthUI(){
+  $('#authTitle').textContent=tr(authMode==='signin'?'sign_in':'sign_up');
+  $('#authSubmit').textContent=tr(authMode==='signin'?'sign_in':'sign_up');
+  $('#authToggle').textContent=tr(authMode==='signin'?'no_account':'have_account');
+  $('#authNote').textContent=Auth.firebaseConfigured()?tr('account'):tr('auth_demo')+' — '+tr('demo_note');
+  $('#emailForm').style.display=authTab==='email'?'block':'none';
+  $('#phoneForm').style.display=authTab==='phone'?'block':'none';
+  $('#segEmail').classList.toggle('active',authTab==='email');
+  $('#segPhone').classList.toggle('active',authTab==='phone');
+  const u=Auth.currentUser();
+  $('#accountBtn').textContent=u?'✓':'👤';
+}
+$('#accountBtn').addEventListener('click', ()=>{
+  const u=Auth.currentUser();
+  if(u){ if(confirm((u.email||u.phone)+' — '+tr('sign_out')+'?')){ Auth.signOut().then(()=>{updateAuthUI(); alert(tr('sign_out'));}); } }
+  else showAuth();
+});
+$('#authClose').addEventListener('click', ()=>$('#authModal').style.display='none');
+$('#segEmail').addEventListener('click', ()=>{authTab='email';updateAuthUI();});
+$('#segPhone').addEventListener('click', ()=>{authTab='phone';updateAuthUI();});
+$('#authToggle').addEventListener('click', ()=>{authMode=authMode==='signin'?'signup':'signin';updateAuthUI();});
+$('#authSubmit').addEventListener('click', async ()=>{
+  const email=$('#authEmail').value.trim(), pass=$('#authPass').value;
+  if(!email.includes('@')||pass.length<6){ alert(tr('email_required')); return; }
+  try{
+    if(authMode==='signup') await Auth.signUpEmail(email,pass); else await Auth.signInEmail(email,pass);
+    $('#authModal').style.display='none'; updateAuthUI(); alert(tr('welcome')+' '+(Auth.currentUser()?.email||''));
+  }catch(e){ alert(tr('auth_failed')+'\n'+e.message); }
+});
+let phoneReady=false;
+$('#sendOtp').addEventListener('click', async ()=>{
+  const phone=$('#authPhone').value.trim();
+  if(!phone.startsWith('+')||phone.length<8){ alert(tr('phone_required')); return; }
+  try{
+    if(!Auth.firebaseConfigured()){ alert(tr('demo_note')); return; }
+    otpConfirm=await Auth.sendPhoneOtp(phone,'recaptcha');
+    $('#otpStep').style.display='block';
+  }catch(e){ alert(tr('auth_failed')+'\n'+e.message); }
+});
+$('#verifyOtp').addEventListener('click', async ()=>{
+  try{ await Auth.confirmPhoneOtp(otpConfirm,$('#otpInput').value.trim()); $('#authModal').style.display='none'; updateAuthUI(); alert(tr('welcome')); }
+  catch(e){ alert(tr('auth_failed')+'\n'+e.message); }
+});
 $$('.tab, [data-tab]').forEach(b => b.addEventListener('click', e => {
   e.preventDefault();
   const tab = b.dataset.tab;
@@ -104,7 +159,7 @@ $('#setup').addEventListener('submit', e => {
 });
 $('#clear').addEventListener('click', () => {
   if (!confirm(tr('clear') + '?')) return;
-  localStorage.removeItem('mc_profile'); localStorage.removeItem('mc_tasks'); localStorage.removeItem('mc_chat');
+  localStorage.removeItem(key('mc_profile')); localStorage.removeItem(key('mc_tasks')); localStorage.removeItem(key('mc_chat'));
   P = null; TASKS = []; CHAT = []; go('onboarding');
 });
 
@@ -228,7 +283,10 @@ if('serviceWorker' in navigator) window.addEventListener('load', ()=> navigator.
 
 (async function init(){
   applyLang();
+  await Auth.initFirebase();
+  Auth.watchAuth(()=>{ loadUserData(); updateAuthUI(); renderAll(); renderSubPage(); });
+  updateAuthUI();
   if(P && P.language && P.language!==LANG){ LANG=P.language; localStorage.setItem('mc_lang',LANG); applyLang(); }
-  if(P){ renderAll(); go('home'); }
+  if(P){ renderAll(); renderSubPage(); go('home'); }
   else { $('#pregFields').style.display='block'; go('onboarding'); }
 })();

@@ -33,6 +33,11 @@ const STRINGS = {
     choose_plan:'Choose a plan',pay_now:'Pay now',payment_demo:'Demo mode — no real payment',payment_note:'Payments are verified on this device only. Client-side subscription can be reset by clearing browser data.',
     manage_sub:'Subscription',renew:'Renew',restore:'Restore purchase',not_subscribed:'Not subscribed',subscribe_first:'Please subscribe to use this feature.',
     payment_success:'Payment successful — full access unlocked!',payment_failed:'Payment could not be completed.',active_until:'Active until',free_limited:'Limited preview',
+    sign_in:'Sign in',sign_up:'Sign up',sign_out:'Sign out',email:'Email',password:'Password',phone:'Phone number',
+    have_account:'Already have an account?',no_account:'New here?',send_code:'Send code',verify:'Verify',
+    otp_code:'6-digit code',auth_demo:'Demo mode — accounts are stored only in this browser',auth_failed:'Could not sign in. Check your details.',
+    welcome:'Welcome',email_required:'Enter a valid email and a password of 6+ characters.',phone_required:'Enter phone with country code, e.g. +919876543210',
+    account:'Account',demo_note:'Configure Firebase in firebase-config.js for real accounts.',
   },
   hi: {
     app_name:'Maternacare AI',tagline:'Pregnancy se baby ke pehle saalon tak saath',
@@ -65,6 +70,11 @@ const STRINGS = {
     choose_plan:'Plan chunein',pay_now:'Abhi pay karein',payment_demo:'Demo mode — asli payment nahi',payment_note:'Payment is device par hi verify hota hai. Browser data mitaane se subscription reset ho sakta hai.',
     manage_sub:'Subscription',renew:'Renew',restore:'Purchase restore karein',not_subscribed:'Subscribe nahi kiya',subscribe_first:'Is feature ke liye pehle subscribe karein.',
     payment_success:'Payment safal — full access unlock!',payment_failed:'Payment pura nahi ho paaya.',active_until:'Is tak active',free_limited:'Limited preview',
+    sign_in:'Sign in',sign_up:'Sign up',sign_out:'Sign out',email:'Email',password:'Password',phone:'Phone number',
+    have_account:'Account hai?',no_account:'Naye hain?',send_code:'Code bhejein',verify:'Verify',
+    otp_code:'6-anka code',auth_demo:'Demo mode — accounts isi browser mein stored hain',auth_failed:'Sign in nahi ho paaya. Details check karein.',
+    welcome:'Swagat',email_required:'Valid email aur 6+ akshar ka password daalein.',phone_required:'Country code ke saath number daalein, jaise +919876543210',
+    account:'Account',demo_note:'Asli accounts ke liye firebase-config.js mein Firebase set karein.',
   },
   bn: {
     app_name:'Maternacare AI',tagline:'গর্ভধারণ থেকে শিশুর প্রথম বছর — সঙ্গে আপনার',
@@ -97,6 +107,11 @@ const STRINGS = {
     choose_plan:'প্ল্যান বেছে নিন',pay_now:'এখন পেমেন্ট',payment_demo:'ডেমো মোড — কোনো বাস্তব পেমেন্ট নেই',payment_note:'পেমেন্ট শুধু এই ডিভাইসে যাচাই হয়। ব্রাউজার ডেটা মুছলে সাবস্ক্রিপশন রিসেট হতে পারে।',
     manage_sub:'সাবস্ক্রিপশন',renew:'নবায়ন',restore:'ক্রয় পুনরুদ্ধার',not_subscribed:'সাবস্ক্রাইব করা নেই',subscribe_first:'এই ফিচারের জন্য আগে সাবস্ক্রাইব করুন।',
     payment_success:'পেমেন্ট সফল — সম্পূর্ণ অ্যাক্সেস!',payment_failed:'পেমেন্ট সম্পন্ন হয়নি।',active_until:'এই তারিখ পর্যন্ত',free_limited:'সীমিত প্রিভিউ',
+    sign_in:'সাইন ইন',sign_up:'সাইন আপ',sign_out:'সাইন আউট',email:'ইমেইল',password:'পাসওয়ার্ড',phone:'ফোন নম্বর',
+    have_account:'অ্যাকাউন্ট আছে?',no_account:'নতুন?',send_code:'কোড পাঠান',verify:'যাচাই',
+    otp_code:'৬-ডিজিট কোড',auth_demo:'ডেমো মোড — অ্যাকাউন্ট শুধু এই ব্রাউজারে থাকে',auth_failed:'সাইন ইন হয়নি। তথ্য যাচাই করুন।',
+    welcome:'স্বাগতম',email_required:'বৈধ ইমেইল ও ৬+ অক্ষরের পাসওয়ার্ড দিন।',phone_required:'কান্ট্রি কোডসহ নম্বর দিন, যেমন +৯১৯৮৭৬৫৪৩২১০',
+    account:'অ্যাকাউন্ট',demo_note:'বাস্তব অ্যাকাউন্টের জন্য firebase-config.js-এ Firebase সেট করুন।',
   },
 };
 

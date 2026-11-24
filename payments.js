@@ -31,14 +31,21 @@ function getDeviceId() {
   return id;
 }
 
+// Subscription is per identity: a signed-in user's uid, else the device id.
+function identityId() {
+  try { const u = JSON.parse(localStorage.getItem('mc_auth_user') || 'null'); if (u && u.uid) return u.uid; } catch (_) {}
+  return getDeviceId();
+}
+function subKey(){ return SUBS_KEY + '_' + identityId(); }
+
 function getSubscription() {
-  try { return JSON.parse(localStorage.getItem(SUBS_KEY) || 'null'); } catch (_) { return null; }
+  try { return JSON.parse(localStorage.getItem(subKey()) || 'null'); } catch (_) { return null; }
 }
 
 function isSubscribed() {
   const s = getSubscription();
   if (!s || !s.expiresAt) return false;
-  if (s.deviceId !== getDeviceId()) return false;
+  if (s.deviceId !== identityId()) return false;
   return new Date(s.expiresAt).getTime() > Date.now();
 }
 
@@ -55,18 +62,18 @@ function activateSubscription(planId, paymentId) {
   if (plan.id === 'yearly') expires.setFullYear(expires.getFullYear() + 1);
   else expires.setMonth(expires.getMonth() + 1);
   const sub = {
-    deviceId: getDeviceId(),
+    deviceId: identityId(),
     plan: plan.id,
     paymentId: paymentId || 'demo',
     activatedAt: now.toISOString(),
     expiresAt: expires.toISOString(),
   };
-  localStorage.setItem(SUBS_KEY, JSON.stringify(sub));
+  localStorage.setItem(subKey(), JSON.stringify(sub));
   return sub;
 }
 
 function clearSubscription() {
-  localStorage.removeItem(SUBS_KEY);
+  localStorage.removeItem(subKey());
 }
 
 /* Open Razorpay checkout. Calls onSuccess(paymentId) / onFail(message). */
@@ -90,7 +97,7 @@ function openCheckout(planId, onSuccess, onFail) {
     currency: PAY_CONFIG.currency,
     name: PAY_CONFIG.companyName,
     description: PAY_CONFIG.description + ' — ' + plan.label,
-    notes: { deviceId: getDeviceId() },
+    notes: { deviceId: identityId() },
     theme: { color: '#0d5c63' },
     handler: function (response) {
       onSuccess(response.razorpay_payment_id);
@@ -100,5 +107,5 @@ function openCheckout(planId, onSuccess, onFail) {
   rzp.open();
 }
 
-const Payments = { PAY_CONFIG, getDeviceId, getSubscription, isSubscribed, daysLeft, activateSubscription, clearSubscription, openCheckout };
+const Payments = { PAY_CONFIG, getDeviceId, identityId, getSubscription, isSubscribed, daysLeft, activateSubscription, clearSubscription, openCheckout };
 if (typeof module !== 'undefined') module.exports = Payments;

@@ -24,6 +24,14 @@ like a native app and works offline.
 - **English, हिन्दी, বাংলা** full UI.
 - **Offline** — service worker caches everything; all data in localStorage.
 
+## Accounts (sign-up / sign-in)
+
+- **Email + password** and **Phone OTP** via **Firebase Auth**, loaded from CDN.
+- Paste your Firebase Web app config into `firebase-config.js` (apiKey, authDomain, projectId, appId). When left as placeholders, the app runs in **local demo mode** — sign-up/sign-in works but accounts exist only in this browser. This is for testing, not security.
+- Enable Email/Password and Phone sign-in in Firebase Console → Authentication → Sign-in method, and add `drvictorbiswas-cmd.github.io` to Authorized domains.
+- A 👤 button in the header opens sign in / sign up; tap again to sign out.
+- **Each person's profile, tasks, chat and subscription are namespaced by their account id** (or device id when signed out), so data does not mix between people on the same device.
+
 ## Subscription & per-device identity
 
 - **Unique device ID**: a UUID is generated on first launch (`mc_device_id`) and shown under the Subscription tab. All saved data and subscription status are tied to this device/browser.
@@ -37,6 +45,8 @@ like a native app and works offline.
 |---|---|
 | `index.html` | App shell |
 | `payments.js` | Device ID, subscription state, Razorpay checkout wrapper |
+| `auth.js` | Firebase Auth (email/password + phone OTP) with local demo fallback |
+| `firebase-config.js` | Your Firebase Web app config (paste here) |
 | `engine.js` | Ported clinical rules + i18n (browser JS) |
 | `app.js` | UI controller, localStorage |
 | `style.css` | Mobile-first styling |

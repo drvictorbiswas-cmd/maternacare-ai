@@ -15,7 +15,7 @@
 <div class="disclaimer" id="disclaimer"><span class="di">i</span><p id="disclaimerText"></p><button onclick="this.parentElement.style.display='none'">×</button></div>
 <header class="header">
   <div class="hdr"><a class="brand" href="#" data-tab="home"><span class="bi">✚</span><b data-i18n="app_name">Maternacare AI</b></a>
-    <div class="hdr-r"><select id="lang" class="lang"><option value="en">English</option><option value="hi">हिन्दी</option><option value="bn">বাংলা</option></select><button class="ib" id="clear" title="Clear data">⟲</button></div>
+    <div class="hdr-r"><button class="ib" id="accountBtn" title="Account">👤</button><select id="lang" class="lang"><option value="en">English</option><option value="hi">हिन्दी</option><option value="bn">বাংলা</option></select><button class="ib" id="clear" title="Clear data">⟲</button></div>
   </div>
   <nav class="tabs">
     <button class="tab active" data-tab="home"><span>⌂</span><i data-i18n="nav_home">Home</i></button>
@@ -98,6 +98,26 @@
   <button class="btn ghost full" id="resetSub" data-i18n="clear">Clear data</button>
 </div></section>
 
+<!-- Auth: sign in / sign up -->
+<div class="modal" id="authModal" style="display:none"><div class="box auth-box">
+  <div class="auth-mark">✚</div><h3 id="authTitle" data-i18n="sign_in">Sign in</h3>
+  <p class="muted" id="authNote"></p>
+  <div class="seg"><button class="seg-b active" id="segEmail" data-i18n="email">Email</button><button class="seg-b" id="segPhone" data-i18n="phone">Phone</button></div>
+  <div id="emailForm">
+    <label class="f"><span data-i18n="email">Email</span><input type="email" id="authEmail" autocomplete="email"/></label>
+    <label class="f"><span data-i18n="password">Password</span><input type="password" id="authPass" autocomplete="current-password"/></label>
+    <button class="btn primary full" id="authSubmit" data-i18n="sign_in">Sign in</button>
+    <button class="link" id="authToggle" data-i18n="no_account">New here?</button>
+  </div>
+  <div id="phoneForm" style="display:none">
+    <label class="f"><span data-i18n="phone">Phone number</span><input type="tel" id="authPhone" placeholder="+919876543210"/></label>
+    <div id="recaptcha" style="display:none"></div>
+    <button class="btn primary full" id="sendOtp" data-i18n="send_code">Send code</button>
+    <div id="otpStep" style="display:none"><label class="f"><span data-i18n="otp_code">6-digit code</span><input type="text" id="otpInput" maxlength="6"/></label><button class="btn primary full" id="verifyOtp" data-i18n="verify">Verify</button></div>
+  </div>
+  <button class="link" id="authClose" style="position:absolute;top:10px;right:14px;font-size:22px">×</button>
+</div></div>
+
 <!-- Subscription gate (shown to non-subscribers) -->
 <div class="gate" id="gate" style="display:none"><div class="gate-box">
   <div class="gate-mark">✚</div>
@@ -113,6 +133,8 @@
 <div class="modal" id="feedbackModal" style="display:none"><div class="box"><h3 data-i18n="report_issue"></h3><p class="muted" data-i18n="report_desc"></p>
   <textarea id="fbText" rows="4"></textarea><div class="modal-a"><button class="btn ghost" id="fbCancel">Cancel</button><button class="btn primary" id="fbSend" data-i18n="send_feedback"></button></div></div></div>
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="engine.js"></script><script src="payments.js"></script><script src="app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="engine.js"></script><script src="payments.js"></script><script src="firebase-config.js"></script><script src="auth.js"></script><script src="app.js"></script>
 </body>
 </html>
