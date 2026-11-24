@@ -9,6 +9,7 @@ regulator approval. It must not be used for diagnosis or emergencies.
 """
 
 import json
+import os
 import sqlite3
 from datetime import date, datetime
 from pathlib import Path
@@ -20,7 +21,7 @@ from engine.i18n import STRINGS, t
 
 app = Flask(__name__)
 BASE = Path(__file__).parent
-DB_PATH = BASE / "data" / "maternacare.db"
+DB_PATH = Path(os.environ.get("DATABASE_PATH", str(BASE / "data" / "maternacare.db")))
 
 
 def get_db():
@@ -390,4 +391,4 @@ def summary():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5055, debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5055)), debug=os.environ.get("FLASK_DEBUG", "1") == "1")

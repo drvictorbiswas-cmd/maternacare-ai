@@ -23,8 +23,8 @@ first.
 | **Onboarding + consent** | Stage, LMP/EDD/week, risk status, conditions, medicines, allergies, doctor, emergency contact. Explicit consent required before any data is saved. |
 | **Pregnancy week tracker** | Computes gestational age and EDD (`LMP + 280 days`), trimester, progress, days remaining. |
 | **Pregnancy Companion / education** | Stage-appropriate, plain-language education for planning, 1st/2nd/3rd trimester, postpartum, newborn and child stages. Each item is source-tagged. |
-| **Traditional Practice Evaluator** | 12 common Indian pregnancy/postpartum practices, each with belief, why, evidence, proven benefit, risk, verdict, evidence-based alternative and "when to see a doctor". Respectful, never ridiculing. |
-| **Danger-Sign Agent** | 15+ warning signs across pregnancy, postpartum and newborn. Keyword triage with **emergency/urgent** classification, reason, action, immediate steps and emergency line. **Over-triggers by design; never reassures a serious symptom.** |
+| **Traditional Practice Evaluator** | 10 common Indian pregnancy/postpartum practices, each with belief, why, evidence, proven benefit, risk, verdict, evidence-based alternative and "when to see a doctor". Respectful, never ridiculing. |
+| **Danger-Sign Agent** | 14 warning signs across pregnancy, postpartum and newborn. Keyword triage with **emergency/urgent** classification, reason, action, immediate steps and emergency line. **Over-triggers by design; never reassures a serious symptom.** |
 | **Appointment & Immunization Agent** | WHO-aligned 8-contact ANC schedule anchored to EDD, high-risk early review, Indian routine immunization schedule. Tasks can be marked done; custom reminders added/deleted. |
 | **Orchestrator chat** | Routes each question: danger signs → escalation (always first), then schedule, traditions, education, or an honest "I don't know — ask your doctor" fallback. Never invents clinical answers. |
 | **Localization** | Full UI in **English, Hindi (Hinglish), and Bengali**, with stage education translated. |
