@@ -24,11 +24,19 @@ like a native app and works offline.
 - **English, हिन्दी, বাংলা** full UI.
 - **Offline** — service worker caches everything; all data in localStorage.
 
-## Files
+## Subscription & per-device identity
 
+- **Unique device ID**: a UUID is generated on first launch (`mc_device_id`) and shown under the Subscription tab. All saved data and subscription status are tied to this device/browser.
+- **Full-app subscription**: monthly (₹990) and yearly (₹7,990) plans via **Razorpay checkout**. On success the app stores the plan, payment ID and expiry date on the device. A Subscription tab shows status and a device ID, and there is a Demo mode for testing without real payment.
+- **Configure your key**: open `payments.js` and replace `razorpayKeyId: 'PASTE_YOUR_RAZORPAY_KEY_ID_HERE'` with your `rzp_live_...` or `rzp_test_...` **key ID** (safe in client code). Set `demoMode: false` to use real checkout. **Never put your Razorpay key secret in this app.**
+
+> ⚠️ **Client-side enforcement caveat:** because this is a static PWA with no backend, subscription status is only browser storage. A determined user can reset it by clearing site data. Real paywall security requires a backend that verifies Razorpay payments via webhooks and serves gated content. Do not rely on this for real revenue protection without that layer.
+
+## Files
 | File | Purpose |
 |---|---|
 | `index.html` | App shell |
+| `payments.js` | Device ID, subscription state, Razorpay checkout wrapper |
 | `engine.js` | Ported clinical rules + i18n (browser JS) |
 | `app.js` | UI controller, localStorage |
 | `style.css` | Mobile-first styling |

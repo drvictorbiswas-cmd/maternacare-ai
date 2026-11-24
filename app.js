@@ -24,16 +24,52 @@ function applyLang() {
   $('#emerBanner').textContent = tr('emergency_banner');
   $('#emerLine').textContent = tr('call102');
   $('#foot').textContent = tr('footer_note');
-  if (P) renderAll();
+  if ($('#gatePlans')) $('#gatePlans').innerHTML = planHTML();
+  if (P) { renderAll(); renderSubPage(); }
 }
 
+const GATED = ['learn','trad','calendar','chat'];
 function go(tab) {
+  if (GATED.includes(tab) && P && !Payments.isSubscribed()) { showGate(); return; }
   $$('.page').forEach(p => p.classList.add('hidden'));
   const el = $('#' + tab); if (el) el.classList.remove('hidden');
   $$('.tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   window.scrollTo({top: 0, behavior: 'smooth'});
   if (tab === 'chat') renderChat();
+  if (tab === 'sub') renderSubPage();
 }
+
+function planHTML(){
+  return Payments.PAY_CONFIG.plans.map(p=>`<div class="plan" onclick="startPay('${p.id}')">
+    <div><b>${esc(p.label)}</b><small>${Payments.PAY_CONFIG.currency} ${p.price.toLocaleString('en-IN')}</small></div>
+    <div class="amt">₹${p.price.toLocaleString('en-IN')}</div></div>`).join('');
+}
+function showGate(){
+  $('#gatePlans').innerHTML=planHTML();
+  $('#gate').style.display='grid';
+}
+window.startPay = id => {
+  Payments.openCheckout(id, paymentId=>{
+    Payments.activateSubscription(id, paymentId);
+    $('#gate').style.display='none';
+    alert(tr('payment_success'));
+    renderAll();
+  }, msg=>{ alert(tr('payment_failed')+'\n'+msg); });
+};
+function renderSubPage(){
+  const ok=Payments.isSubscribed(), s=Payments.getSubscription();
+  const status=$('#subStatus');
+  if(ok){
+    status.className='sub-status active';
+    status.innerHTML=`<h2>${esc(tr('subscribed'))}</h2><div class="big">${esc(tr('plan'))}: ${esc(s.plan)}</div><p class="muted">${esc(tr('active_until'))}: ${new Date(s.expiresAt).toLocaleDateString()} · ${Payments.daysLeft()} ${esc(tr('days_left'))}</p>`;
+  } else {
+    status.className='sub-status';
+    status.innerHTML=`<h2>${esc(tr('not_subscribed'))}</h2><p class="muted">${esc(tr('sub_desc'))}</p><div class="plans" style="margin-top:12px">${planHTML()}</div>`;
+  }
+  $('#deviceIdText').textContent=Payments.getDeviceId();
+}
+$('#gateClose').addEventListener('click', ()=>$('#gate').style.display='none');
+$('#resetSub').addEventListener('click', ()=>{ if(confirm(tr('clear')+'?')){ Payments.clearSubscription(); renderSubPage(); } });
 $$('.tab, [data-tab]').forEach(b => b.addEventListener('click', e => {
   e.preventDefault();
   const tab = b.dataset.tab;
@@ -63,7 +99,8 @@ $('#setup').addEventListener('submit', e => {
     const items = Engine.ancSchedule({edd: P.computed_edd});
     if (P.stage === 'pregnancy') TASKS = items;
   }
-  save(); renderAll(); go('home');
+  save(); renderAll();
+  if (!Payments.isSubscribed()) showGate(); else go('home');
 });
 $('#clear').addEventListener('click', () => {
   if (!confirm(tr('clear') + '?')) return;
@@ -164,6 +201,9 @@ function renderHome(){
   $('#hWeek').textContent=stage==='pregnancy'?`${tr('week')} ${week}`:tr(stage==='postpartum'?'stage_postpartum_s':'stage_baby_s');
   $('#hTri').textContent=stage==='pregnancy'?`${week} / 40`:'';
   $('#hEdd').textContent=P.computed_edd||tr('not_set');
+  const subOk=Payments.isSubscribed();
+  $('#subChipText').textContent=subOk?`${tr('subscribed')} · ${Payments.daysLeft()} ${tr('days_left')}`:tr('subscribe');
+  $('#subChipText').className=subOk?'on':'';
   const open=TASKS.filter(x=>!x.done).sort((a,b)=>a.due.localeCompare(b.due));
   $('#hNext').textContent=open.length?open[0].title+' · '+open[0].due:tr('all_done');
   const pct=stage==='pregnancy'?Math.min(100,Math.round(week/40*100)):100;

@@ -24,6 +24,7 @@
     <button class="tab" data-tab="safety"><span>!</span><i data-i18n="nav_safety">Safety</i></button>
     <button class="tab" data-tab="calendar"><span>▦</span><i data-i18n="nav_calendar">Calendar</i></button>
     <button class="tab" data-tab="chat"><span>◌</span><i data-i18n="nav_chat">Ask</i></button>
+    <button class="tab" data-tab="sub"><span>✧</span><i data-i18n="manage_sub">Subscription</i></button>
   </nav>
 </header>
 
@@ -62,6 +63,7 @@
     <div class="hero-top"><div><p class="eyebrow" id="hStage"></p><h1 id="hWeek"></h1><p class="muted" id="hTri"></p></div><div class="ring" id="hRing"><span id="hPct">0%</span></div></div>
     <div class="hero-meta"><div><small data-i18n="edd_label">EDD</small><strong id="hEdd"></strong></div><div><small data-i18n="next_visit">Next visit</small><strong id="hNext"></strong></div></div>
   </div>
+  <button class="sub-chip" id="subChip" data-tab="sub"><span>✧</span><span id="subChipText"></span></button>
   <button class="emer-btn" data-tab="safety"><span>🚨</span><span data-i18n="open_emergency">Emergency help</span><span>→</span></button>
   <div class="card"><h2 data-i18n="quick_check">Quick safety check</h2><p class="muted" data-i18n="quick_check_desc"></p>
     <form class="inline" id="quickF"><input id="quickIn" data-ph="symptom"/><button class="btn primary" data-i18n="check_now">Check</button></form><div id="quickOut"></div></div>
@@ -89,10 +91,28 @@
   <div class="log" id="log"></div><form class="inline" id="chatF"><input id="chatIn" data-ph="chat_placeholder" autocomplete="off"/><button class="btn primary" data-i18n="send"></button></form></div></section>
 </main>
 
+<section id="sub" class="page hidden"><div class="card"><h1 data-i18n="manage_sub">Subscription</h1>
+  <div id="subStatus"></div>
+  <h2 data-i18n="device_id">Device ID</h2><p class="muted" id="deviceIdText" style="word-break:break-all"></p>
+  <p class="hint" data-i18n="payment_note"></p>
+  <button class="btn ghost full" id="resetSub" data-i18n="clear">Clear data</button>
+</div></section>
+
+<!-- Subscription gate (shown to non-subscribers) -->
+<div class="gate" id="gate" style="display:none"><div class="gate-box">
+  <div class="gate-mark">✚</div>
+  <h1 data-i18n="sub_title">Unlock full access</h1>
+  <p class="muted" data-i18n="sub_desc"></p>
+  <div class="plans" id="gatePlans"></div>
+  <p class="hint" data-i18n="payment_note"></p>
+  <button class="link" id="gateClose">×</button>
+</div></div>
+
 <footer class="footer"><p id="foot"></p><div class="foot-a"><button class="link" id="feedbackBtn" data-i18n="report_issue"></button><button class="link" data-tab="home" data-i18n="profile"></button></div></footer>
 
 <div class="modal" id="feedbackModal" style="display:none"><div class="box"><h3 data-i18n="report_issue"></h3><p class="muted" data-i18n="report_desc"></p>
   <textarea id="fbText" rows="4"></textarea><div class="modal-a"><button class="btn ghost" id="fbCancel">Cancel</button><button class="btn primary" id="fbSend" data-i18n="send_feedback"></button></div></div></div>
-<script src="engine.js"></script><script src="app.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="engine.js"></script><script src="payments.js"></script><script src="app.js"></script>
 </body>
 </html>

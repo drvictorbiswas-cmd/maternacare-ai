@@ -28,6 +28,11 @@ const STRINGS = {
     custom_task:'Custom reminder',anc_visit:'Antenatal visit',investigation:'Investigation',vaccination:'Vaccination',postpartum_visit:'Postpartum visit',ultrasound:'Ultrasound',
     education_none:'Education for this stage is being prepared.',report_issue:'Report a safety concern',report_desc:'Tell us if guidance seems unsafe or wrong. (Prototype: saved locally.)',send_feedback:'Send feedback',feedback_saved:'Feedback saved. Thank you.',
     install:'Install app',install_hint:'Add to Home screen for a full-screen, offline app',offline:'Available offline',baby_age:'Baby’s age',months:'months',immunizations:'Immunizations',milestone:'Watch for',
+    sub_title:'Unlock full access',sub_desc:'Maternacare AI is a subscription app. Subscribe to use all features on this device.',
+    subscribe:'Subscribe',subscribed:'Subscribed',plan:'Plan',expires:'Expires',days_left:'days left',device_id:'Device ID',
+    choose_plan:'Choose a plan',pay_now:'Pay now',payment_demo:'Demo mode — no real payment',payment_note:'Payments are verified on this device only. Client-side subscription can be reset by clearing browser data.',
+    manage_sub:'Subscription',renew:'Renew',restore:'Restore purchase',not_subscribed:'Not subscribed',subscribe_first:'Please subscribe to use this feature.',
+    payment_success:'Payment successful — full access unlocked!',payment_failed:'Payment could not be completed.',active_until:'Active until',free_limited:'Limited preview',
   },
   hi: {
     app_name:'Maternacare AI',tagline:'Pregnancy se baby ke pehle saalon tak saath',
@@ -55,6 +60,11 @@ const STRINGS = {
     custom_task:'Apna reminder',anc_visit:'Antenatal visit',investigation:'Test',vaccination:'Vaccination',postpartum_visit:'Postpartum visit',ultrasound:'Ultrasound',
     education_none:'Is stage ki jaankari taiyar ho rahi hai.',report_issue:'Suraksha concern report',report_desc:'Guidance unsafe lage to batayein. (Feedback locally save.)',send_feedback:'Feedback bhejein',feedback_saved:'Feedback save ho gaya. Dhanyavaad.',
     install:'App install karein',install_hint:'Home screen par add karein — full-screen, offline',offline:'Offline available',baby_age:'Baby ki umar',months:'mahine',immunizations:'Immunization',milestone:'Dhyan dein',
+    sub_title:'Full access unlock karein',sub_desc:'Maternacare AI subscription app hai. Is device par sab features ke liye subscribe karein.',
+    subscribe:'Subscribe karein',subscribed:'Subscribed',plan:'Plan',expires:'Expiry',days_left:'din bache',device_id:'Device ID',
+    choose_plan:'Plan chunein',pay_now:'Abhi pay karein',payment_demo:'Demo mode — asli payment nahi',payment_note:'Payment is device par hi verify hota hai. Browser data mitaane se subscription reset ho sakta hai.',
+    manage_sub:'Subscription',renew:'Renew',restore:'Purchase restore karein',not_subscribed:'Subscribe nahi kiya',subscribe_first:'Is feature ke liye pehle subscribe karein.',
+    payment_success:'Payment safal — full access unlock!',payment_failed:'Payment pura nahi ho paaya.',active_until:'Is tak active',free_limited:'Limited preview',
   },
   bn: {
     app_name:'Maternacare AI',tagline:'গর্ভধারণ থেকে শিশুর প্রথম বছর — সঙ্গে আপনার',
@@ -82,6 +92,11 @@ const STRINGS = {
     custom_task:'নিজের রিমাইন্ডার',anc_visit:'প্রসব-পূর্ব সাক্ষাৎ',investigation:'পরীক্ষা',vaccination:'টিকাদান',postpartum_visit:'প্রসব-পরবর্তী সাক্ষাৎ',ultrasound:'আল্ট্রাসাউন্ড',
     education_none:'এই পর্যায়ের তথ্য প্রস্তুত হচ্ছে।',report_issue:'নিরাপত্তা সমস্যা জানান',report_desc:'অনিরাপদ মনে হলে জানান (স্থানীয়ভাবে সংরক্ষিত)।',send_feedback:'মতামত দিন',feedback_saved:'সংরক্ষিত। ধন্যবাদ।',
     install:'অ্যাপ ইনস্টল',install_hint:'হোম স্ক্রিনে যোগ করুন — ফুলস্ক্রিন, অফলাইন',offline:'অফলাইনে চলে',baby_age:'শিশুর বয়স',months:'মাস',immunizations:'টিকাদান',milestone:'নজর রাখুন',
+    sub_title:'সম্পূর্ণ অ্যাক্সেস আনলক',sub_desc:'Maternacare AI একটি সাবস্ক্রিপশন অ্যাপ। এই ডিভাইসে সব ফিচারের জন্য সাবস্ক্রাইব করুন।',
+    subscribe:'সাবস্ক্রাইব',subscribed:'সাবস্ক্রাইব করা',plan:'প্ল্যান',expires:'মেয়াদ',days_left:'দিন বাকি',device_id:'ডিভাইস আইডি',
+    choose_plan:'প্ল্যান বেছে নিন',pay_now:'এখন পেমেন্ট',payment_demo:'ডেমো মোড — কোনো বাস্তব পেমেন্ট নেই',payment_note:'পেমেন্ট শুধু এই ডিভাইসে যাচাই হয়। ব্রাউজার ডেটা মুছলে সাবস্ক্রিপশন রিসেট হতে পারে।',
+    manage_sub:'সাবস্ক্রিপশন',renew:'নবায়ন',restore:'ক্রয় পুনরুদ্ধার',not_subscribed:'সাবস্ক্রাইব করা নেই',subscribe_first:'এই ফিচারের জন্য আগে সাবস্ক্রাইব করুন।',
+    payment_success:'পেমেন্ট সফল — সম্পূর্ণ অ্যাক্সেস!',payment_failed:'পেমেন্ট সম্পন্ন হয়নি।',active_until:'এই তারিখ পর্যন্ত',free_limited:'সীমিত প্রিভিউ',
   },
 };
 

@@ -1,7 +1,7 @@
 /* Maternacare AI service worker — offline cache. */
-const CACHE = 'maternacare-v1';
+const CACHE = 'maternacare-v2';
 const ASSETS = [
-  './', './index.html', './style.css', './engine.js', './app.js',
+  './', './index.html', './style.css', './engine.js', './payments.js', './app.js',
   './manifest.json', './icon.svg'
 ];
 self.addEventListener('install', e => {
